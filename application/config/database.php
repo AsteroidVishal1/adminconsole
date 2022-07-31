@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'root',
-	'database' => 'stock',
+	'hostname' => 'premium120.web-hosting.com',
+	'username' => 'ecssbcdz_stock',
+	'password' => 'stock@123',
+	'database' => 'ecssbcdz_stock',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
