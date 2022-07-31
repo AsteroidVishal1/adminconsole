@@ -61,6 +61,16 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="quality">Quality</label>
+                  <input type="text" class="form-control" id="quality" name="quality" placeholder="Enter quality" autocomplete="off"/>
+                </div>
+
+                <div class="form-group">
+                  <label for="color">Color</label>
+                  <input type="text" class="form-control" id="color" name="color" placeholder="Enter color" autocomplete="off"/>
+                </div>
+
+                <div class="form-group">
                   <label for="sku">SKU</label>
                   <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter sku" autocomplete="off" />
                 </div>

@@ -71,6 +71,8 @@ class Products extends Admin_Controller
 				$img,
 				$value['sku'],
 				$value['name'],
+				$value['quality'],
+				$value['color'],
 				$value['price'],
                 $value['qty'] . ' ' . $qty_status,
                 $store_data['name'],
@@ -94,6 +96,8 @@ class Products extends Admin_Controller
         }
 
 		$this->form_validation->set_rules('product_name', 'Product name', 'trim|required');
+		$this->form_validation->set_rules('quality', 'Quality', 'trim|required');
+		$this->form_validation->set_rules('color', 'Color', 'trim|required');
 		$this->form_validation->set_rules('sku', 'SKU', 'trim|required');
 		$this->form_validation->set_rules('price', 'Price', 'trim|required');
 		$this->form_validation->set_rules('qty', 'Qty', 'trim|required');
@@ -107,6 +111,8 @@ class Products extends Admin_Controller
 
         	$data = array(
         		'name' => $this->input->post('product_name'),
+        		'quality' => $this->input->post('quality'),
+        		'color' => $this->input->post('color'),
         		'sku' => $this->input->post('sku'),
         		'price' => $this->input->post('price'),
         		'qty' => $this->input->post('qty'),
@@ -201,6 +207,8 @@ class Products extends Admin_Controller
         }
 
         $this->form_validation->set_rules('product_name', 'Product name', 'trim|required');
+        $this->form_validation->set_rules('quality', 'Quality', 'trim|required');
+        $this->form_validation->set_rules('color', 'Color', 'trim|required');
         $this->form_validation->set_rules('sku', 'SKU', 'trim|required');
         $this->form_validation->set_rules('price', 'Price', 'trim|required');
         $this->form_validation->set_rules('qty', 'Qty', 'trim|required');
@@ -212,6 +220,8 @@ class Products extends Admin_Controller
             
             $data = array(
                 'name' => $this->input->post('product_name'),
+                'quality' => $this->input->post('quality'),
+                'color' => $this->input->post('color'),
                 'sku' => $this->input->post('sku'),
                 'price' => $this->input->post('price'),
                 'qty' => $this->input->post('qty'),
