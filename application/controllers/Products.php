@@ -53,6 +53,10 @@ class Products extends Admin_Controller
             if(in_array('deleteProduct', $this->permission)) { 
     			$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
             }
+
+            if(in_array('viewProduct', $this->permission)) { 
+    			$buttons .= ' <button type="button" class="btn btn-default" onclick="requestFunc('.$value['id'].')" data-toggle="modal" data-target="#requestModal"><i class="fa fa-rocket"></i></button>';
+            }
 			
 
 			$img = '<img src="'.base_url($value['image']).'" alt="'.$value['name'].'" class="img-circle" width="50" height="50" />';
