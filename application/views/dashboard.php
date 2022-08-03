@@ -35,20 +35,19 @@
             </div>
           </div>
           <!-- ./col -->
-          <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
+          <!-- <div class="col-lg-3 col-xs-6">
             <div class="small-box bg-green">
               <div class="inner">
-                <h3><?php echo $total_paid_orders ?></h3>
+                <h3></?php echo $total_paid_orders ?></h3>
 
                 <p>Total Paid Orders</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="<?php echo base_url('orders/') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="</?php echo base_url('orders/') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
-          </div>
+          </div> -->
           <!-- ./col -->
           <div class="col-lg-3 col-xs-6">
             <!-- small box -->

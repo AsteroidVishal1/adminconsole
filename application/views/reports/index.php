@@ -62,11 +62,10 @@
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
-          <div class="box">
+          <!-- <div class="box">
             <div class="box-header">
               <h3 class="box-title">Total Paid Orders - Report Data</h3>
             </div>
-            <!-- /.box-header -->
             <div class="box-body">
               <table id="datatables" class="table table-bordered table-striped">
                 <thead>
@@ -77,32 +76,31 @@
                 </thead>
                 <tbody>
 
-                  <?php foreach ($results as $k => $v): ?>
+                  </?php foreach ($results as $k => $v): ?>
                     <tr>
-                      <td><?php echo $k; ?></td>
-                      <td><?php 
+                      <td></?php echo $k; ?></td>
+                      <td></?php 
                       
                         echo $company_currency .' ' . $v;
                         //echo $v;
                       
                       ?></td>
                     </tr>
-                  <?php endforeach ?>
+                  </?php endforeach ?>
                   
                 </tbody>
                 <tbody>
                   <tr>
                     <th>Total Amount</th>
                     <th>
-                      <?php //echo $company_currency . ' ' . array_sum($parking_data); ?>
-                      <?php echo array_sum($results); ?>
+                      </?php //echo $company_currency . ' ' . array_sum($parking_data); ?>
+                      </?php echo array_sum($results); ?>
                     </th>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <!-- /.box-body -->
-          </div>
+          </div> -->
           <!-- /.box -->
         </div>
         <!-- col-md-12 -->

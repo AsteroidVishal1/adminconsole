@@ -13,7 +13,7 @@ class Reports extends Admin_Controller
 
 	/* 
     * It redirects to the report page
-    * and based on the year, all the orders data are fetch from the database.
+    * and based on the year, all the requests data are fetch from the database.
     */
 	public function index()
 	{
@@ -27,8 +27,8 @@ class Reports extends Admin_Controller
 			$today_year = $this->input->post('select_year');
 		}
 
-		$parking_data = $this->model_reports->getOrderData($today_year);
-		$this->data['report_years'] = $this->model_reports->getOrderYear();
+		$parking_data = $this->model_reports->getRequestData($today_year);
+		$this->data['report_years'] = $this->model_reports->getRequestYear();
 		
 
 		$final_parking_data = array();

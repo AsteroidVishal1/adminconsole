@@ -107,21 +107,21 @@
           <?php endif; ?>
 
 
-          <?php if(in_array('createOrder', $user_permission) || in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
-            <li class="treeview" id="mainOrdersNav">
+          <?php if(in_array('createRequest', $user_permission) || in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission) || in_array('deleteRequest', $user_permission)): ?>
+            <li class="treeview" id="mainRequestsNav">
               <a href="#">
                 <i class="fa fa-dollar"></i>
-                <span>Orders</span>
+                <span>Requests</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
-                <?php if(in_array('createOrder', $user_permission)): ?>
-                  <li id="addOrderNav"><a href="<?php echo base_url('orders/create') ?>"><i class="fa fa-circle-o"></i> Add Order</a></li>
+                <?php if(in_array('createRequest', $user_permission)): ?>
+                  <li id="addRequestNav"><a href="<?php echo base_url('requests/create') ?>"><i class="fa fa-circle-o"></i> Add Request</a></li>
                 <?php endif; ?>
-                <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
-                <li id="manageOrdersNav"><a href="<?php echo base_url('orders') ?>"><i class="fa fa-circle-o"></i> Manage Orders</a></li>
+                <?php if(in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission) || in_array('deleteRequest', $user_permission)): ?>
+                <li id="manageRequestsNav"><a href="<?php echo base_url('requests') ?>"><i class="fa fa-circle-o"></i> Manage Requests</a></li>
                 <?php endif; ?>
               </ul>
             </li>

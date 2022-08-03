@@ -13,10 +13,10 @@ class Model_reports extends CI_Model
 		return array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
 	}
 
-	/* getting the year of the orders */
-	public function getOrderYear()
+	/* getting the year of the requests */
+	public function getRequestYear()
 	{
-		$sql = "SELECT * FROM orders WHERE paid_status = ?";
+		$sql = "SELECT * FROM requests WHERE request_status = ?";
 		$query = $this->db->query($sql, array(1));
 		$result = $query->result_array();
 		
@@ -31,13 +31,13 @@ class Model_reports extends CI_Model
 		return $return_data;
 	}
 
-	// getting the order reports based on the year and moths
-	public function getOrderData($year)
+	// getting the request reports based on the year and moths
+	public function getRequestData($year)
 	{	
 		if($year) {
 			$months = $this->months();
 			
-			$sql = "SELECT * FROM orders WHERE paid_status = ?";
+			$sql = "SELECT * FROM requests WHERE request_status = ?";
 			$query = $this->db->query($sql, array(1));
 			$result = $query->result_array();
 

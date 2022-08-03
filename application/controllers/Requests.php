@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Orders extends Admin_Controller 
+class Requests extends Admin_Controller 
 {
 	public function __construct()
 	{
@@ -10,39 +10,39 @@ class Orders extends Admin_Controller
 
 		$this->not_logged_in();
 
-		$this->data['page_title'] = 'Orders';
+		$this->data['page_title'] = 'Requests';
 
-		$this->load->model('model_orders');
+		$this->load->model('model_requests');
 		$this->load->model('model_products');
 		$this->load->model('model_company');
 	}
 
 	/* 
-	* It only redirects to the manage order page
+	* It only redirects to the manage request page
 	*/
 	public function index()
 	{
-		if(!in_array('viewOrder', $this->permission)) {
+		if(!in_array('viewRequest', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
 
-		$this->data['page_title'] = 'Manage Orders';
-		$this->render_template('orders/index', $this->data);		
+		$this->data['page_title'] = 'Manage Requests';
+		$this->render_template('requests/index', $this->data);		
 	}
 
 	/*
-	* Fetches the orders data from the orders table 
+	* Fetches the requests data from the requests table 
 	* this function is called from the datatable ajax function
 	*/
-	public function fetchOrdersData()
+	public function fetchRequestsData()
 	{
 		$result = array('data' => array());
 
-		$data = $this->model_orders->getOrdersData();
+		$data = $this->model_requests->getRequestsData();
 
 		foreach ($data as $key => $value) {
 
-			$count_total_item = $this->model_orders->countOrderItem($value['id']);
+			$count_total_item = $this->model_requests->countRequestItem($value['id']);
 			$date = date('d-m-Y', $value['date_time']);
 			$time = date('h:i a', $value['date_time']);
 
@@ -51,23 +51,23 @@ class Orders extends Admin_Controller
 			// button
 			$buttons = '';
 
-			if(in_array('viewOrder', $this->permission)) {
-				$buttons .= '<a target="__blank" href="'.base_url('orders/printDiv/'.$value['id']).'" class="btn btn-default"><i class="fa fa-print"></i></a>';
+			if(in_array('viewRequest', $this->permission)) {
+				$buttons .= '<a target="__blank" href="'.base_url('requests/printDiv/'.$value['id']).'" class="btn btn-default"><i class="fa fa-print"></i></a>';
 			}
 
-			if(in_array('updateOrder', $this->permission)) {
-				$buttons .= ' <a href="'.base_url('orders/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
+			if(in_array('updateRequest', $this->permission)) {
+				$buttons .= ' <a href="'.base_url('requests/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
 			}
 
-			if(in_array('deleteOrder', $this->permission)) {
+			if(in_array('deleteRequest', $this->permission)) {
 				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
 			}
 
-			if($value['paid_status'] == 1) {
-				$paid_status = '<span class="label label-success">Paid</span>';	
+			if($value['request_status'] == 1) {
+				$request_status = '<span class="label label-success">Paid</span>';	
 			}
 			else {
-				$paid_status = '<span class="label label-warning">Not Paid</span>';
+				$request_status = '<span class="label label-warning">Not Paid</span>';
 			}
 
 			$result['data'][$key] = array(
@@ -77,7 +77,7 @@ class Orders extends Admin_Controller
 				$date_time,
 				$count_total_item,
 				$value['net_amount'],
-				$paid_status,
+				$request_status,
 				$buttons
 			);
 		} // /foreach
@@ -92,26 +92,26 @@ class Orders extends Admin_Controller
 	*/
 	public function create()
 	{
-		if(!in_array('createOrder', $this->permission)) {
+		if(!in_array('createRequest', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
 
-		$this->data['page_title'] = 'Add Order';
+		$this->data['page_title'] = 'Add Request';
 
 		$this->form_validation->set_rules('product[]', 'Product name', 'trim|required');
 		
 	
         if ($this->form_validation->run() == TRUE) {        	
         	
-        	$order_id = $this->model_orders->create();
+        	$request_id = $this->model_requests->create();
         	
-        	if($order_id) {
+        	if($request_id) {
         		$this->session->set_flashdata('success', 'Successfully created');
-        		redirect('orders/update/'.$order_id, 'refresh');
+        		redirect('requests/update/'.$request_id, 'refresh');
         	}
         	else {
         		$this->session->set_flashdata('errors', 'Error occurred!!');
-        		redirect('orders/create/', 'refresh');
+        		redirect('requests/create/', 'refresh');
         	}
         }
         else {
@@ -123,7 +123,7 @@ class Orders extends Admin_Controller
 
         	$this->data['products'] = $this->model_products->getActiveProductData();      	
 
-            $this->render_template('orders/create', $this->data);
+            $this->render_template('requests/create', $this->data);
         }	
 	}
 
@@ -143,7 +143,7 @@ class Orders extends Admin_Controller
 
 	/*
 	* It gets the all the active product inforamtion from the product table 
-	* This function is used in the order page, for the product selection in the table
+	* This function is used in the request page, for the product selection in the table
 	* The response is return on the json format.
 	*/
 	public function getTableProductRow()
@@ -153,13 +153,13 @@ class Orders extends Admin_Controller
 	}
 
 	/*
-	* If the validation is not valid, then it redirects to the edit orders page 
+	* If the validation is not valid, then it redirects to the edit requests page 
 	* If the validation is successfully then it updates the data into the database 
 	* and it stores the operation message into the session flashdata and display on the manage group page
 	*/
 	public function update($id)
 	{
-		if(!in_array('updateOrder', $this->permission)) {
+		if(!in_array('updateRequest', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
 
@@ -167,22 +167,22 @@ class Orders extends Admin_Controller
 			redirect('dashboard', 'refresh');
 		}
 
-		$this->data['page_title'] = 'Update Order';
+		$this->data['page_title'] = 'Update Request';
 
 		$this->form_validation->set_rules('product[]', 'Product name', 'trim|required');
 		
 	
         if ($this->form_validation->run() == TRUE) {        	
         	
-        	$update = $this->model_orders->update($id);
+        	$update = $this->model_requests->update($id);
         	
         	if($update == true) {
         		$this->session->set_flashdata('success', 'Successfully updated');
-        		redirect('orders/update/'.$id, 'refresh');
+        		redirect('requests/update/'.$id, 'refresh');
         	}
         	else {
         		$this->session->set_flashdata('errors', 'Error occurred!!');
-        		redirect('orders/update/'.$id, 'refresh');
+        		redirect('requests/update/'.$id, 'refresh');
         	}
         }
         else {
@@ -193,20 +193,20 @@ class Orders extends Admin_Controller
         	$this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
 
         	$result = array();
-        	$orders_data = $this->model_orders->getOrdersData($id);
+        	$requests_data = $this->model_requests->getRequestsData($id);
 
-    		$result['order'] = $orders_data;
-    		$orders_item = $this->model_orders->getOrdersItemData($orders_data['id']);
+    		$result['request'] = $requests_data;
+    		$requests_item = $this->model_requests->getRequestsItemData($requests_data['id']);
 
-    		foreach($orders_item as $k => $v) {
-    			$result['order_item'][] = $v;
+    		foreach($requests_item as $k => $v) {
+    			$result['request_item'][] = $v;
     		}
 
-    		$this->data['order_data'] = $result;
+    		$this->data['request_data'] = $result;
 
         	$this->data['products'] = $this->model_products->getActiveProductData();      	
 
-            $this->render_template('orders/edit', $this->data);
+            $this->render_template('requests/edit', $this->data);
         }
 	}
 
@@ -216,15 +216,15 @@ class Orders extends Admin_Controller
 	*/
 	public function remove()
 	{
-		if(!in_array('deleteOrder', $this->permission)) {
+		if(!in_array('deleteRequest', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
 
-		$order_id = $this->input->post('order_id');
+		$request_id = $this->input->post('request_id');
 
         $response = array();
-        if($order_id) {
-            $delete = $this->model_orders->remove($order_id);
+        if($request_id) {
+            $delete = $this->model_requests->remove($request_id);
             if($delete == true) {
                 $response['success'] = true;
                 $response['messages'] = "Successfully removed"; 
@@ -243,22 +243,22 @@ class Orders extends Admin_Controller
 	}
 
 	/*
-	* It gets the product id and fetch the order data. 
-	* The order print logic is done here 
+	* It gets the product id and fetch the request data. 
+	* The request print logic is done here 
 	*/
 	public function printDiv($id)
 	{
-		if(!in_array('viewOrder', $this->permission)) {
+		if(!in_array('viewRequest', $this->permission)) {
             redirect('dashboard', 'refresh');
         }
         
 		if($id) {
-			$order_data = $this->model_orders->getOrdersData($id);
-			$orders_items = $this->model_orders->getOrdersItemData($id);
+			$request_data = $this->model_requests->getRequestsData($id);
+			$requests_items = $this->model_requests->getRequestsItemData($id);
 			$company_info = $this->model_company->getCompanyData(1);
 
-			$order_date = date('d/m/Y', $order_data['date_time']);
-			$paid_status = ($order_data['paid_status'] == 1) ? "Paid" : "Unpaid";
+			$request_date = date('d/m/Y', $request_data['date_time']);
+			$request_status = ($request_data['request_status'] == 1) ? "Paid" : "Unpaid";
 
 			$html = '<!-- Main content -->
 			<!DOCTYPE html>
@@ -284,7 +284,7 @@ class Orders extends Admin_Controller
 			      <div class="col-xs-12">
 			        <h2 class="page-header">
 			          '.$company_info['company_name'].'
-			          <small class="pull-right">Date: '.$order_date.'</small>
+			          <small class="pull-right">Date: '.$request_date.'</small>
 			        </h2>
 			      </div>
 			      <!-- /.col -->
@@ -294,10 +294,10 @@ class Orders extends Admin_Controller
 			      
 			      <div class="col-sm-4 invoice-col">
 			        
-			        <b>Bill ID:</b> '.$order_data['bill_no'].'<br>
-			        <b>Name:</b> '.$order_data['customer_name'].'<br>
-			        <b>Address:</b> '.$order_data['customer_address'].' <br />
-			        <b>Phone:</b> '.$order_data['customer_phone'].'
+			        <b>Bill ID:</b> '.$request_data['bill_no'].'<br>
+			        <b>Name:</b> '.$request_data['customer_name'].'<br>
+			        <b>Address:</b> '.$request_data['customer_address'].' <br />
+			        <b>Phone:</b> '.$request_data['customer_phone'].'
 			      </div>
 			      <!-- /.col -->
 			    </div>
@@ -317,7 +317,7 @@ class Orders extends Admin_Controller
 			          </thead>
 			          <tbody>'; 
 
-			          foreach ($orders_items as $k => $v) {
+			          foreach ($requests_items as $k => $v) {
 
 			          	$product_data = $this->model_products->getProductData($v['product_id']); 
 			          	
@@ -344,35 +344,35 @@ class Orders extends Admin_Controller
 			          <table class="table">
 			            <tr>
 			              <th style="width:50%">Gross Amount:</th>
-			              <td>'.$order_data['gross_amount'].'</td>
+			              <td>'.$request_data['gross_amount'].'</td>
 			            </tr>';
 
-			            if($order_data['service_charge'] > 0) {
+			            if($request_data['service_charge'] > 0) {
 			            	$html .= '<tr>
-				              <th>Service Charge ('.$order_data['service_charge_rate'].'%)</th>
-				              <td>'.$order_data['service_charge'].'</td>
+				              <th>Service Charge ('.$request_data['service_charge_rate'].'%)</th>
+				              <td>'.$request_data['service_charge'].'</td>
 				            </tr>';
 			            }
 
-			            if($order_data['vat_charge'] > 0) {
+			            if($request_data['vat_charge'] > 0) {
 			            	$html .= '<tr>
-				              <th>Vat Charge ('.$order_data['vat_charge_rate'].'%)</th>
-				              <td>'.$order_data['vat_charge'].'</td>
+				              <th>Vat Charge ('.$request_data['vat_charge_rate'].'%)</th>
+				              <td>'.$request_data['vat_charge'].'</td>
 				            </tr>';
 			            }
 			            
 			            
 			            $html .=' <tr>
 			              <th>Discount:</th>
-			              <td>'.$order_data['discount'].'</td>
+			              <td>'.$request_data['discount'].'</td>
 			            </tr>
 			            <tr>
 			              <th>Net Amount:</th>
-			              <td>'.$order_data['net_amount'].'</td>
+			              <td>'.$request_data['net_amount'].'</td>
 			            </tr>
 			            <tr>
 			              <th>Paid Status:</th>
-			              <td>'.$paid_status.'</td>
+			              <td>'.$request_status.'</td>
 			            </tr>
 			          </table>
 			        </div>

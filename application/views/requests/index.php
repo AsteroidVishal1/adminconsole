@@ -6,11 +6,11 @@
   <section class="content-header">
     <h1>
       Manage
-      <small>Orders</small>
+      <small>Requests</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Orders</li>
+      <li class="active">Requests</li>
     </ol>
   </section>
 
@@ -34,14 +34,14 @@
           </div>
         <?php endif; ?>
 
-        <?php if(in_array('createOrder', $user_permission)): ?>
-          <a href="<?php echo base_url('orders/create') ?>" class="btn btn-primary">Add Order</a>
+        <?php if(in_array('createRequest', $user_permission)): ?>
+          <a href="<?php echo base_url('requests/create') ?>" class="btn btn-primary">Add Request</a>
           <br /> <br />
         <?php endif; ?>
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Manage Orders</h3>
+            <h3 class="box-title">Manage Requests</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -55,7 +55,7 @@
                 <th>Total Products</th>
                 <th>Total Amount</th>
                 <th>Paid status</th>
-                <?php if(in_array('updateOrder', $user_permission) || in_array('viewOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
+                <?php if(in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission) || in_array('deleteRequest', $user_permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>
               </tr>
@@ -77,17 +77,17 @@
 </div>
 <!-- /.content-wrapper -->
 
-<?php if(in_array('deleteOrder', $user_permission)): ?>
+<?php if(in_array('deleteRequest', $user_permission)): ?>
 <!-- remove brand modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="removeModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Remove Order</h4>
+        <h4 class="modal-title">Remove Request</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('orders/remove') ?>" method="post" id="removeForm">
+      <form role="form" action="<?php echo base_url('requests/remove') ?>" method="post" id="removeForm">
         <div class="modal-body">
           <p>Do you really want to remove?</p>
         </div>
@@ -111,12 +111,12 @@ var base_url = "<?php echo base_url(); ?>";
 
 $(document).ready(function() {
 
-  $("#mainOrdersNav").addClass('active');
-  $("#manageOrdersNav").addClass('active');
+  $("#mainRequestsNav").addClass('active');
+  $("#manageRequestsNav").addClass('active');
 
   // initialize the datatable 
   manageTable = $('#manageTable').DataTable({
-    'ajax': base_url + 'orders/fetchOrdersData',
+    'ajax': base_url + 'requests/fetchRequestsData',
     'order': []
   });
 
@@ -136,7 +136,7 @@ function removeFunc(id)
       $.ajax({
         url: form.attr('action'),
         type: form.attr('method'),
-        data: { order_id:id }, 
+        data: { request_id:id }, 
         dataType: 'json',
         success:function(response) {
 

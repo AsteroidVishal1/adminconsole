@@ -55,11 +55,8 @@
                   <th>Qty</th>
                   <th>Store</th>
                   <th>Availability</th>
-                  <?php if (in_array('updateProduct', $user_permission) || in_array('deleteProduct', $user_permission)) : ?>
+                  <?php if (in_array('updateProduct', $user_permission) || in_array('deleteProduct', $user_permission) || in_array('viewProduct', $user_permission)) : ?>
                     <th>Action</th>
-                  <?php endif; ?>
-                  <?php if (in_array('viewProduct', $user_permission)) : ?>
-                    <th>Request</th>
                   <?php endif; ?>
                 </tr>
               </thead>
@@ -158,8 +155,8 @@
     $(".select_group").select2();
     // $("#description").wysihtml5();
 
-    $("#mainOrdersNav").addClass('active');
-    $("#addOrderNav").addClass('active');
+    $("#mainRequestsNav").addClass('active');
+    $("#addRequestNav").addClass('active');
 
     var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' +
       'onclick="alert(\'Call your custom code here.\')">' +
@@ -173,7 +170,7 @@
       var row_id = count_table_tbody_tr + 1;
 
       $.ajax({
-        url: base_url + '/orders/getTableProductRow/',
+        url: base_url + '/requests/getTableProductRow/',
         type: 'post',
         dataType: 'json',
         success: function(response) {
@@ -334,7 +331,7 @@
 
     } else {
       $.ajax({
-        url: base_url + 'orders/getProductValueById',
+        url: base_url + 'requests/getProductValueById',
         type: 'post',
         data: {
           product_id: product_id
