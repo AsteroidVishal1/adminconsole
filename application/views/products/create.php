@@ -70,15 +70,15 @@
                   <input type="text" class="form-control" id="color" name="color" placeholder="Enter color" autocomplete="off"/>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="sku">SKU</label>
                   <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter sku" autocomplete="off" />
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="price">Price</label>
                   <input type="text" class="form-control" id="price" name="price" placeholder="Enter price" autocomplete="off" />
-                </div>
+                </div> -->
 
                 <div class="form-group">
                   <label for="qty">Qty</label>
@@ -106,7 +106,7 @@
                 <?php endif; ?>
 
                 <div class="form-group">
-                  <label for="brands">Brands</label>
+                  <label for="brands">Units</label>
                   <select class="form-control select_group" id="brands" name="brands[]" multiple="multiple">
                     <?php foreach ($brands as $k => $v): ?>
                       <option value="<?php echo $v['id'] ?>"><?php echo $v['name'] ?></option>
@@ -170,9 +170,9 @@
     $("#mainProductNav").addClass('active');
     $("#addProductNav").addClass('active');
     
-    var btnCust = '<button type="button" class="btn btn-secondary" title="Add picture tags" ' + 
-        'onclick="alert(\'Call your custom code here.\')">' +
-        '<i class="glyphicon glyphicon-tag"></i>' +
+    var btnCust = //'<button type="button" class="btn btn-secondary" title="Add picture tags" ' + 
+        //'onclick="alert(\'Call your custom code here.\')">' +
+        //'<i class="glyphicon glyphicon-tag"></i>' +
         '</button>'; 
     $("#product_image").fileinput({
         overwriteInitial: true,

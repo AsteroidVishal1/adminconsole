@@ -35,17 +35,18 @@
             </div>
           </div>
           <!-- ./col -->
-          <!-- <div class="col-lg-3 col-xs-6">
-            <div class="small-box bg-green">
+          <!-- <div class="col-lg-3 col-xs-6"> -->
+            <!-- small box -->
+            <!-- <div class="small-box bg-green">
               <div class="inner">
-                <h3></?php echo $total_paid_orders ?></h3>
+                <h3><?php echo $total_paid_orders ?></h3>
 
                 <p>Total Paid Orders</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="</?php echo base_url('orders/') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="<?php echo base_url('orders/') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div> -->
           <!-- ./col -->
@@ -74,6 +75,22 @@
               </div>
               <div class="icon">
                 <i class="ion ion-android-home"></i>
+              </div>
+              <a href="<?php echo base_url('stores/') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <!-- ./col -->
+          <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-blue">
+              <div class="inner">
+                <h3><?php echo $total_stores ?></h3>
+
+                <p>Pending Requests</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-android-sync"></i>
               </div>
               <a href="<?php echo base_url('stores/') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>

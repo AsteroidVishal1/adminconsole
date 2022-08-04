@@ -51,7 +51,7 @@
                   <th>Email</th>
                   <th>Name</th>
                   <th>Phone</th>
-                  <th>Group</th>
+                  <th>Department</th>
 
                   <?php if(in_array('updateUser', $user_permission) || in_array('deleteUser', $user_permission)): ?>
                   <th>Action</th>

@@ -6,11 +6,11 @@
     <section class="content-header">
       <h1>
         Manage
-        <small>Groups</small>
+        <small>Departments</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<?php echo base_url('groups/') ?>">Groups</a></li>
+        <li><a href="<?php echo base_url('groups/') ?>">Departments</a></li>
         <li class="active">Delete</li>
       </ol>
     </section>
@@ -33,7 +33,7 @@
             </div>
           <?php endif; ?>
 
-          <h1>Do you really want to remove ?</h1>
+          <h1>Do you really want to remove ?<br> This action cannot be undone.</h1>
 
           <form action="<?php echo base_url('groups/delete/'.$id) ?>" method="post">
             <input type="submit" class="btn btn-primary" name="confirm" value="Confirm">

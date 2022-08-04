@@ -6,11 +6,11 @@
   <section class="content-header">
     <h1>
       Manage
-      <small>Requests</small>
+      <small>Orders</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Requests</li>
+      <li class="active">Orders</li>
     </ol>
   </section>
 
@@ -37,10 +37,10 @@
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Edit Request</h3>
+            <h3 class="box-title">Edit Order</h3>
           </div>
           <!-- /.box-header -->
-          <form role="form" action="<?php base_url('requests/create') ?>" method="post" class="form-horizontal">
+          <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal">
               <div class="box-body">
 
                 <?php echo validation_errors(); ?>
@@ -57,21 +57,21 @@
                   <div class="form-group">
                     <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Customer Name</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter Customer Name" value="<?php echo $request_data['request']['customer_name'] ?>" autocomplete="off"/>
+                      <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Enter Customer Name" value="<?php echo $order_data['order']['customer_name'] ?>" autocomplete="off"/>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Customer Address</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="customer_address" name="customer_address" placeholder="Enter Customer Address" value="<?php echo $request_data['request']['customer_address'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="customer_address" name="customer_address" placeholder="Enter Customer Address" value="<?php echo $order_data['order']['customer_address'] ?>" autocomplete="off">
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Customer Phone</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="customer_phone" name="customer_phone" placeholder="Enter Customer Phone" value="<?php echo $request_data['request']['customer_phone'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="customer_phone" name="customer_phone" placeholder="Enter Customer Phone" value="<?php echo $order_data['order']['customer_phone'] ?>" autocomplete="off">
                     </div>
                   </div>
                 </div>
@@ -91,9 +91,9 @@
 
                    <tbody>
 
-                    <?php if(isset($request_data['request_item'])): ?>
+                    <?php if(isset($order_data['order_item'])): ?>
                       <?php $x = 1; ?>
-                      <?php foreach ($request_data['request_item'] as $key => $val): ?>
+                      <?php foreach ($order_data['order_item'] as $key => $val): ?>
                         <?php //print_r($v); ?>
                        <tr id="row_<?php echo $x; ?>">
                          <td>
@@ -128,16 +128,16 @@
                   <div class="form-group">
                     <label for="gross_amount" class="col-sm-5 control-label">Gross Amount</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="gross_amount" name="gross_amount" disabled value="<?php echo $request_data['request']['gross_amount'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" value="<?php echo $request_data['request']['gross_amount'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="gross_amount" name="gross_amount" disabled value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
+                      <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
                     </div>
                   </div>
                   <?php if($is_service_enabled == true): ?>
                   <div class="form-group">
                     <label for="service_charge" class="col-sm-5 control-label">S-Charge <?php echo $company_data['service_charge_value'] ?> %</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="service_charge" name="service_charge" disabled value="<?php echo $request_data['request']['service_charge'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="service_charge_value" name="service_charge_value" value="<?php echo $request_data['request']['service_charge'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="service_charge" name="service_charge" disabled value="<?php echo $order_data['order']['service_charge'] ?>" autocomplete="off">
+                      <input type="hidden" class="form-control" id="service_charge_value" name="service_charge_value" value="<?php echo $order_data['order']['service_charge'] ?>" autocomplete="off">
                     </div>
                   </div>
                   <?php endif; ?>
@@ -145,29 +145,29 @@
                   <div class="form-group">
                     <label for="vat_charge" class="col-sm-5 control-label">Vat <?php echo $company_data['vat_charge_value'] ?> %</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="vat_charge" name="vat_charge" disabled value="<?php echo $request_data['request']['vat_charge'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="vat_charge_value" name="vat_charge_value" value="<?php echo $request_data['request']['vat_charge'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="vat_charge" name="vat_charge" disabled value="<?php echo $order_data['order']['vat_charge'] ?>" autocomplete="off">
+                      <input type="hidden" class="form-control" id="vat_charge_value" name="vat_charge_value" value="<?php echo $order_data['order']['vat_charge'] ?>" autocomplete="off">
                     </div>
                   </div>
                   <?php endif; ?>
                   <div class="form-group">
                     <label for="discount" class="col-sm-5 control-label">Discount</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount" onkeyup="subAmount()" value="<?php echo $request_data['request']['discount'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount" onkeyup="subAmount()" value="<?php echo $order_data['order']['discount'] ?>" autocomplete="off">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="net_amount" class="col-sm-5 control-label">Net Amount</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="net_amount" name="net_amount" disabled value="<?php echo $request_data['request']['net_amount'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" value="<?php echo $request_data['request']['net_amount'] ?>" autocomplete="off">
+                      <input type="text" class="form-control" id="net_amount" name="net_amount" disabled value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
+                      <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="request_status" class="col-sm-5 control-label">Paid Status</label>
+                    <label for="paid_status" class="col-sm-5 control-label">Paid Status</label>
                     <div class="col-sm-7">
-                      <select type="text" class="form-control" id="request_status" name="request_status">
+                      <select type="text" class="form-control" id="paid_status" name="paid_status">
                         <option value="1">Paid</option>
                         <option value="2">Unpaid</option>
                       </select>
@@ -183,9 +183,9 @@
                 <input type="hidden" name="service_charge_rate" value="<?php echo $company_data['service_charge_value'] ?>" autocomplete="off">
                 <input type="hidden" name="vat_charge_rate" value="<?php echo $company_data['vat_charge_value'] ?>" autocomplete="off">
 
-                <a target="__blank" href="<?php echo base_url() . 'requests/printDiv/'.$request_data['request']['id'] ?>" class="btn btn-default" >Print</a>
+                <a target="__blank" href="<?php echo base_url() . 'orders/printDiv/'.$order_data['order']['id'] ?>" class="btn btn-default" >Print</a>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
-                <a href="<?php echo base_url('requests/') ?>" class="btn btn-warning">Back</a>
+                <a href="<?php echo base_url('orders/') ?>" class="btn btn-warning">Back</a>
               </div>
             </form>
           <!-- /.box-body -->
@@ -205,11 +205,11 @@
 <script type="text/javascript">
   var base_url = "<?php echo base_url(); ?>";
 
-  // function printRequest(id)
+  // function printOrder(id)
   // {
   //   if(id) {
   //     $.ajax({
-  //       url: base_url + 'requests/printDiv/' + id,
+  //       url: base_url + 'orders/printDiv/' + id,
   //       type: 'post',
   //       success:function(response) {
   //         var mywindow = window.open('', 'new div', 'height=400,width=600');
@@ -232,8 +232,8 @@
     $(".select_group").select2();
     // $("#description").wysihtml5();
 
-    $("#mainRequestsNav").addClass('active');
-    $("#manageRequestsNav").addClass('active');
+    $("#mainOrdersNav").addClass('active');
+    $("#manageOrdersNav").addClass('active');
     
     
     // Add new row in the table 
@@ -243,7 +243,7 @@
       var row_id = count_table_tbody_tr + 1;
 
       $.ajax({
-          url: base_url + '/requests/getTableProductRow/',
+          url: base_url + '/orders/getTableProductRow/',
           type: 'post',
           dataType: 'json',
           success:function(response) {
@@ -312,7 +312,7 @@
 
     } else {
       $.ajax({
-        url: base_url + 'requests/getProductValueById',
+        url: base_url + 'orders/getProductValueById',
         type: 'post',
         data: {product_id : product_id},
         dataType: 'json',
@@ -336,7 +336,7 @@
     }
   }
 
-  // calculate the total amount of the request
+  // calculate the total amount of the order
   function subAmount() {
     var service_charge = <?php echo ($company_data['service_charge_value'] > 0) ? $company_data['service_charge_value']:0; ?>;
     var vat_charge = <?php echo ($company_data['vat_charge_value'] > 0) ? $company_data['vat_charge_value']:0; ?>;

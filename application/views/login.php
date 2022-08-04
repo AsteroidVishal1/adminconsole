@@ -33,7 +33,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?php echo base_url('auth'); ?>"><b>Login</b></a>
+    <a href="<?php echo base_url(''); ?>"><b>Login</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -47,11 +47,11 @@
 
     <form action="<?php echo base_url('auth/login') ?>" method="post">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="off">
+        <input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="on">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="off">
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password" autocomplete="on">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">

@@ -53,7 +53,7 @@ class Products extends Admin_Controller
             if(in_array('deleteProduct', $this->permission)) { 
     			$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
             }
-
+            
             if(in_array('viewProduct', $this->permission)) { 
     			$buttons .= ' <button type="button" class="btn btn-default" onclick="requestFunc('.$value['id'].')" data-toggle="modal" data-target="#requestModal"><i class="fa fa-rocket"></i></button>';
             }
@@ -73,11 +73,11 @@ class Products extends Admin_Controller
 
 			$result['data'][$key] = array(
 				$img,
-				$value['sku'],
+				// $value['sku'],
 				$value['name'],
 				$value['quality'],
 				$value['color'],
-				$value['price'],
+				// $value['price'],
                 $value['qty'] . ' ' . $qty_status,
                 $store_data['name'],
 				$availability,
@@ -102,8 +102,8 @@ class Products extends Admin_Controller
 		$this->form_validation->set_rules('product_name', 'Product name', 'trim|required');
 		$this->form_validation->set_rules('quality', 'Quality', 'trim|required');
 		$this->form_validation->set_rules('color', 'Color', 'trim|required');
-		$this->form_validation->set_rules('sku', 'SKU', 'trim|required');
-		$this->form_validation->set_rules('price', 'Price', 'trim|required');
+		// $this->form_validation->set_rules('sku', 'SKU', 'trim|required');
+		// $this->form_validation->set_rules('price', 'Price', 'trim|required');
 		$this->form_validation->set_rules('qty', 'Qty', 'trim|required');
         $this->form_validation->set_rules('store', 'Store', 'trim|required');
 		$this->form_validation->set_rules('availability', 'Availability', 'trim|required');
@@ -117,8 +117,8 @@ class Products extends Admin_Controller
         		'name' => $this->input->post('product_name'),
         		'quality' => $this->input->post('quality'),
         		'color' => $this->input->post('color'),
-        		'sku' => $this->input->post('sku'),
-        		'price' => $this->input->post('price'),
+        		// 'sku' => $this->input->post('sku'),
+        		// 'price' => $this->input->post('price'),
         		'qty' => $this->input->post('qty'),
         		'image' => $upload_image,
         		'description' => $this->input->post('description'),
@@ -213,8 +213,8 @@ class Products extends Admin_Controller
         $this->form_validation->set_rules('product_name', 'Product name', 'trim|required');
         $this->form_validation->set_rules('quality', 'Quality', 'trim|required');
         $this->form_validation->set_rules('color', 'Color', 'trim|required');
-        $this->form_validation->set_rules('sku', 'SKU', 'trim|required');
-        $this->form_validation->set_rules('price', 'Price', 'trim|required');
+        // $this->form_validation->set_rules('sku', 'SKU', 'trim|required');
+        // $this->form_validation->set_rules('price', 'Price', 'trim|required');
         $this->form_validation->set_rules('qty', 'Qty', 'trim|required');
         $this->form_validation->set_rules('store', 'Store', 'trim|required');
         $this->form_validation->set_rules('availability', 'Availability', 'trim|required');
@@ -226,8 +226,8 @@ class Products extends Admin_Controller
                 'name' => $this->input->post('product_name'),
                 'quality' => $this->input->post('quality'),
                 'color' => $this->input->post('color'),
-                'sku' => $this->input->post('sku'),
-                'price' => $this->input->post('price'),
+                // 'sku' => $this->input->post('sku'),
+                // 'price' => $this->input->post('price'),
                 'qty' => $this->input->post('qty'),
                 'description' => $this->input->post('description'),
                 'attribute_value_id' => json_encode($this->input->post('attributes_value_id')),

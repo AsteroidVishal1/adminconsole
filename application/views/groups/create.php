@@ -6,11 +6,11 @@
     <section class="content-header">
       <h1>
         Manage
-        <small>Groups</small>
+        <small>Departments</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">groups</li>
+        <li class="active">Departments</li>
       </ol>
     </section>
 
@@ -34,7 +34,7 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Add Group</h3>
+              <h3 class="box-title">Add Departments</h3>
             </div>
             <form role="form" action="<?php base_url('groups/create') ?>" method="post">
               <div class="box-body">
@@ -42,8 +42,8 @@
                 <?php echo validation_errors(); ?>
 
                 <div class="form-group">
-                  <label for="group_name">Group Name</label>
-                  <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Enter group name">
+                  <label for="group_name">Department Name</label>
+                  <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Enter department name">
                 </div>
                 <div class="form-group">
                   <label for="permission">Permission</label>
@@ -67,14 +67,14 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteUser" class="minimal"></td>
                       </tr>
                       <tr>
-                        <td>Groups</td>
+                        <td>Departments</td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="createGroup" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="updateGroup" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="viewGroup" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteGroup" class="minimal"></td>
                       </tr>
                       <tr>
-                        <td>Brands</td>
+                        <td>Units (UOM)</td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="createBrand" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="updateBrand" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="viewBrand" class="minimal"></td>
@@ -126,7 +126,7 @@
                         <td>Company</td>
                         <td> - </td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="updateCompany" class="minimal"></td>
-                        <td> - </td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewCompany" class="minimal"></td>
                         <td> - </td>
                       </tr>
                       <tr>

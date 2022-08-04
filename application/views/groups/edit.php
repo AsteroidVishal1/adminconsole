@@ -6,11 +6,11 @@
     <section class="content-header">
       <h1>
         Manage
-        <small>Groups</small>
+        <small>Departments</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<?php echo base_url('groups/') ?>">Groups</a></li>
+        <li><a href="<?php echo base_url('groups/') ?>">Departments</a></li>
         <li class="active">Edit</li>
       </ol>
     </section>
@@ -35,7 +35,7 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Edit Group</h3>
+              <h3 class="box-title">Edit Department</h3>
             </div>
             <form role="form" action="<?php base_url('groups/update') ?>" method="post">
               <div class="box-body">
@@ -43,8 +43,8 @@
                 <?php echo validation_errors(); ?>
 
                 <div class="form-group">
-                  <label for="group_name">Group Name</label>
-                  <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Enter group name" value="<?php echo $group_data['group_name']; ?>">
+                  <label for="group_name">Department Name</label>
+                  <input type="text" class="form-control" id="group_name" name="group_name" placeholder="Enter Department name" value="<?php echo $group_data['group_name']; ?>">
                 </div>
                 <div class="form-group">
                   <label for="permission">Permission</label>
@@ -211,7 +211,9 @@
                         <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="updateCompany" <?php if($serialize_permission) {
                           if(in_array('updateCompany', $serialize_permission)) { echo "checked"; } 
                         } ?>></td>
-                        <td> - </td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="viewCompany" <?php if($serialize_permission) {
+                          if(in_array('viewCompany', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
                         <td> - </td>
                       </tr>
                       <tr>

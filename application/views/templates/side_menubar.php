@@ -37,17 +37,17 @@
             <li class="treeview" id="mainGroupNav">
               <a href="#">
                 <i class="fa fa-files-o"></i>
-                <span>Groups</span>
+                <span>Departments</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
                 <?php if(in_array('createGroup', $user_permission)): ?>
-                  <li id="addGroupNav"><a href="<?php echo base_url('groups/create') ?>"><i class="fa fa-circle-o"></i> Add Group</a></li>
+                  <li id="addGroupNav"><a href="<?php echo base_url('groups/create') ?>"><i class="fa fa-circle-o"></i> Add Departments</a></li>
                 <?php endif; ?>
                 <?php if(in_array('updateGroup', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
-                <li id="manageGroupNav"><a href="<?php echo base_url('groups') ?>"><i class="fa fa-circle-o"></i> Manage Groups</a></li>
+                <li id="manageGroupNav"><a href="<?php echo base_url('groups') ?>"><i class="fa fa-circle-o"></i> Manage Departments</a></li>
                 <?php endif; ?>
               </ul>
             </li>
@@ -57,7 +57,7 @@
           <?php if(in_array('createBrand', $user_permission) || in_array('updateBrand', $user_permission) || in_array('viewBrand', $user_permission) || in_array('deleteBrand', $user_permission)): ?>
             <li id="brandNav">
               <a href="<?php echo base_url('brands/') ?>">
-                <i class="glyphicon glyphicon-tags"></i> <span>Brands</span>
+                <i class="glyphicon glyphicon-tags"></i> <span>Units (UOM)</span>
               </a>
             </li>
           <?php endif; ?>

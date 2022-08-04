@@ -6,11 +6,11 @@
     <section class="content-header">
       <h1>
         Manage
-        <small>Groups</small>
+        <small>Departments</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">groups</li>
+        <li class="active">Departments</li>
       </ol>
     </section>
 
@@ -33,20 +33,20 @@
           <?php endif; ?>
 
           <?php if(in_array('createGroup', $user_permission)): ?>
-            <a href="<?php echo base_url('groups/create') ?>" class="btn btn-primary">Add Group</a>
+            <a href="<?php echo base_url('groups/create') ?>" class="btn btn-primary">Add Departments</a>
             <br /> <br />
           <?php endif; ?>
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Manage Groups</h3>
+              <h3 class="box-title">Manage Departments</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="groupTable" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Group Name</th>
+                  <th>Departments Name</th>
                   <?php if(in_array('updateGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
                     <th>Action</th>
                   <?php endif; ?>

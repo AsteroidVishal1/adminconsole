@@ -34,11 +34,11 @@
           </div>
         <?php endif; ?>
 
-        <?php if(in_array('createRequest', $user_permission)): ?>
-          <a href="<?php echo base_url('requests/create') ?>" class="btn btn-primary">Add Request</a>
+        <!-- </?php if(in_array('createRequest', $user_permission)): ?>
+          <a href="</?php echo base_url('requests/create') ?>" class="btn btn-primary">Add Request</a>
           <br /> <br />
-        <?php endif; ?>
-
+        </?php endif; ?> -->
+         <br />
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">Manage Requests</h3>
@@ -48,13 +48,13 @@
             <table id="manageTable" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>Bill no</th>
-                <th>Customer Name</th>
-                <th>Customer Phone</th>
+                <th>Sr. No</th>
+                <th>Request From</th>
+                <th>Product Name</th>
                 <th>Date Time</th>
-                <th>Total Products</th>
-                <th>Total Amount</th>
-                <th>Paid status</th>
+                <th>Quantity Requested</th>
+                <!-- <th>Total Amount</th> -->
+                <th>Request Status</th>
                 <?php if(in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission) || in_array('deleteRequest', $user_permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>

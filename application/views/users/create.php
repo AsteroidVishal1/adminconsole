@@ -42,9 +42,9 @@
                 <?php echo validation_errors(); ?>
 
                 <div class="form-group">
-                  <label for="groups">Groups</label>
+                  <label for="groups">Departments</label>
                   <select class="form-control" id="groups" name="groups">
-                    <option value="">Select Groups</option>
+                    <option value="">Select Department</option>
                     <?php foreach ($group_data as $k => $v): ?>
                       <option value="<?php echo $v['id'] ?>"><?php echo $v['group_name'] ?></option>
                     <?php endforeach ?>

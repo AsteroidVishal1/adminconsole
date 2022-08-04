@@ -74,15 +74,15 @@
                   <input type="text" class="form-control" id="color" name="color" placeholder="Enter color" value="<?php echo $product_data['color']; ?>"  autocomplete="off"/>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="sku">SKU</label>
                   <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter sku" value="<?php echo $product_data['sku']; ?>" autocomplete="off" />
-                </div>
+                </div> -->
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="price">Price</label>
                   <input type="text" class="form-control" id="price" name="price" placeholder="Enter price" value="<?php echo $product_data['price']; ?>" autocomplete="off" />
-                </div>
+                </div> -->
 
                 <div class="form-group">
                   <label for="qty">Qty</label>
