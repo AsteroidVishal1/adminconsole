@@ -51,9 +51,8 @@
                 <th>Sr. No</th>
                 <th>Request From</th>
                 <th>Product Name</th>
-                <th>Date Time</th>
                 <th>Quantity Requested</th>
-                <!-- <th>Total Amount</th> -->
+                <th>Date Time</th>
                 <th>Request Status</th>
                 <?php if(in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission) || in_array('deleteRequest', $user_permission)): ?>
                   <th>Action</th>

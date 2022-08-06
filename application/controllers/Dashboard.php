@@ -19,7 +19,7 @@ class Dashboard extends Admin_Controller
 
 	/* 
 	* It only redirects to the manage category page
-	* It passes the total product, total paid orders, total users, and total stores information
+	* It passes the total product, total paid requests, total users, and total stores information
 	into the frontend.
 	*/
 	public function index()

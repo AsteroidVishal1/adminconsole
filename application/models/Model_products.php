@@ -21,6 +21,16 @@ class Model_products extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getMultipleProductData($ids = null)
+	{
+		if(!$ids) {
+			return false;
+		}
+		$sql = "SELECT name, qty FROM products WHERE id in ?";
+		$query = $this->db->query($sql, array($ids));
+		return $query->result_array();
+	}
+
 	public function getActiveProductData()
 	{
 		$sql = "SELECT * FROM products WHERE availability = ? ORDER BY id DESC";

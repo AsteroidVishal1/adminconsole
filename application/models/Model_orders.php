@@ -1,35 +1,35 @@
 <?php 
 
-class Model_orders extends CI_Model
+class Model_requests extends CI_Model
 {
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-	/* get the orders data */
-	public function getOrdersData($id = null)
+	/* get the requests data */
+	public function getRequestsData($id = null)
 	{
 		if($id) {
-			$sql = "SELECT * FROM orders WHERE id = ?";
+			$sql = "SELECT * FROM requests WHERE id = ?";
 			$query = $this->db->query($sql, array($id));
 			return $query->row_array();
 		}
 
-		$sql = "SELECT * FROM orders ORDER BY id DESC";
+		$sql = "SELECT * FROM requests ORDER BY id DESC";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
 
-	// get the orders item data
-	public function getOrdersItemData($order_id = null)
+	// get the requests item data
+	public function getRequestsItemData($request_id = null)
 	{
-		if(!$order_id) {
+		if(!$request_id) {
 			return false;
 		}
 
-		$sql = "SELECT * FROM orders_item WHERE order_id = ?";
-		$query = $this->db->query($sql, array($order_id));
+		$sql = "SELECT * FROM requests_item WHERE request_id = ?";
+		$query = $this->db->query($sql, array($request_id));
 		return $query->result_array();
 	}
 
@@ -54,22 +54,22 @@ class Model_orders extends CI_Model
     		'user_id' => $user_id
     	);
 
-		$insert = $this->db->insert('orders', $data);
-		$order_id = $this->db->insert_id();
+		$insert = $this->db->insert('requests', $data);
+		$request_id = $this->db->insert_id();
 
 		$this->load->model('model_products');
 
 		$count_product = count($this->input->post('product'));
     	for($x = 0; $x < $count_product; $x++) {
     		$items = array(
-    			'order_id' => $order_id,
+    			'request_id' => $request_id,
     			'product_id' => $this->input->post('product')[$x],
     			'qty' => $this->input->post('qty')[$x],
     			'rate' => $this->input->post('rate_value')[$x],
     			'amount' => $this->input->post('amount_value')[$x],
     		);
 
-    		$this->db->insert('orders_item', $items);
+    		$this->db->insert('requests_item', $items);
 
     		// now decrease the stock from the product
     		$product_data = $this->model_products->getProductData($this->input->post('product')[$x]);
@@ -81,14 +81,14 @@ class Model_orders extends CI_Model
     		$this->model_products->update($update_product, $this->input->post('product')[$x]);
     	}
 
-		return ($order_id) ? $order_id : false;
+		return ($request_id) ? $request_id : false;
 	}
 
-	public function countOrderItem($order_id)
+	public function countRequestItem($request_id)
 	{
-		if($order_id) {
-			$sql = "SELECT * FROM orders_item WHERE order_id = ?";
-			$query = $this->db->query($sql, array($order_id));
+		if($request_id) {
+			$sql = "SELECT * FROM requests_item WHERE request_id = ?";
+			$query = $this->db->query($sql, array($request_id));
 			return $query->num_rows();
 		}
 	}
@@ -97,7 +97,7 @@ class Model_orders extends CI_Model
 	{
 		if($id) {
 			$user_id = $this->session->userdata('id');
-			// fetch the order data 
+			// fetch the request data 
 
 			$data = array(
 				'customer_name' => $this->input->post('customer_name'),
@@ -115,13 +115,13 @@ class Model_orders extends CI_Model
 	    	);
 
 			$this->db->where('id', $id);
-			$update = $this->db->update('orders', $data);
+			$update = $this->db->update('requests', $data);
 
-			// now the order item 
+			// now the request item 
 			// first we will replace the product qty to original and subtract the qty again
 			$this->load->model('model_products');
-			$get_order_item = $this->getOrdersItemData($id);
-			foreach ($get_order_item as $k => $v) {
+			$get_request_item = $this->getRequestsItemData($id);
+			foreach ($get_request_item as $k => $v) {
 				$product_id = $v['product_id'];
 				$qty = $v['qty'];
 				// get the product 
@@ -133,21 +133,21 @@ class Model_orders extends CI_Model
 				$this->model_products->update($update_product_data, $product_id);
 			}
 
-			// now remove the order item data 
-			$this->db->where('order_id', $id);
-			$this->db->delete('orders_item');
+			// now remove the request item data 
+			$this->db->where('request_id', $id);
+			$this->db->delete('requests_item');
 
 			// now decrease the product qty
 			$count_product = count($this->input->post('product'));
 	    	for($x = 0; $x < $count_product; $x++) {
 	    		$items = array(
-	    			'order_id' => $id,
+	    			'request_id' => $id,
 	    			'product_id' => $this->input->post('product')[$x],
 	    			'qty' => $this->input->post('qty')[$x],
 	    			'rate' => $this->input->post('rate_value')[$x],
 	    			'amount' => $this->input->post('amount_value')[$x],
 	    		);
-	    		$this->db->insert('orders_item', $items);
+	    		$this->db->insert('requests_item', $items);
 
 	    		// now decrease the stock from the product
 	    		$product_data = $this->model_products->getProductData($this->input->post('product')[$x]);
@@ -167,17 +167,17 @@ class Model_orders extends CI_Model
 	{
 		if($id) {
 			$this->db->where('id', $id);
-			$delete = $this->db->delete('orders');
+			$delete = $this->db->delete('requests');
 
-			$this->db->where('order_id', $id);
-			$delete_item = $this->db->delete('orders_item');
+			$this->db->where('request_id', $id);
+			$delete_item = $this->db->delete('requests_item');
 			return ($delete == true && $delete_item) ? true : false;
 		}
 	}
 
-	public function countTotalPaidOrders()
+	public function countTotalPaidRequests()
 	{
-		$sql = "SELECT * FROM orders WHERE paid_status = ?";
+		$sql = "SELECT * FROM requests WHERE paid_status = ?";
 		$query = $this->db->query($sql, array(1));
 		return $query->num_rows();
 	}

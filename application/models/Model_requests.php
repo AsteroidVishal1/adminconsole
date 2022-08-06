@@ -33,6 +33,18 @@ class Model_requests extends CI_Model
     return $query->result_array();
   }
 
+  // get the requests item data
+  public function getProductId($request_id = null)
+  {
+    if (!$request_id) {
+      return false;
+    }
+
+    $sql = "SELECT product_id, qty FROM requests_item WHERE request_id = ?";
+    $query = $this->db->query($sql, array($request_id));
+    return $query->result_array();
+  }
+
   public function create()
   {
     $user_id = $this->session->userdata('id');
@@ -50,20 +62,21 @@ class Model_requests extends CI_Model
     $count_product = count($this->input->post('product'));
     for ($x = 0; $x < $count_product; $x++) {
       $items = array(
+        'request_id' => $request_id,
         'product_id' => $this->input->post('product')[$x],
         'qty' => $this->input->post('qty')[$x],
       );
 
       $this->db->insert('requests_item', $items);
 
-      // now decrease the stock from the product
-      // $product_data = $this->model_products->getProductData($this->input->post('product')[$x]);
-      // $qty = (int) $product_data['qty'] - (int) $this->input->post('qty')[$x];
+    // now decrease the stock from the product
+    // $product_data = $this->model_products->getProductData($this->input->post('product')[$x]);
+    // $qty = (int) $product_data['qty'] - (int) $this->input->post('qty')[$x];
 
-      // $update_product = array('qty' => $qty);
+    // $update_product = array('qty' => $qty);
 
 
-      // $this->model_products->update($update_product, $this->input->post('product')[$x]);
+    // $this->model_products->update($update_product, $this->input->post('product')[$x]);
     }
 
     return ($request_id) ? $request_id : false;
@@ -137,23 +150,20 @@ class Model_requests extends CI_Model
       return true;
     }
   }
+  public function remove($id)  {
+    if ($id) {
+      $this->db->where('id', $id);
+      $delete = $this->db->delete('requests');
 
-  // public function remove($id)
-  // {
-  //   if ($id) {
-  //     $this->db->where('id', $id);
-  //     $delete = $this->db->delete('requests');
+      $this->db->where('request_id', $id);
+      $delete_item = $this->db->delete('requests_item');
+      return ($delete == true && $delete_item) ? true : false;
+    }  }
 
-  //     $this->db->where('request_id', $id);
-  //     $delete_item = $this->db->delete('requests_item');
-  //     return ($delete == true && $delete_item) ? true : false;
-  //   }
-  // }
-
-  // public function countTotalPaidRequests()
-  // {
-  //   $sql = "SELECT * FROM requests WHERE request_status = ?";
-  //   $query = $this->db->query($sql, array(1));
-  //   return $query->num_rows();
-  // }
+// public function countTotalPaidRequests()
+// {
+//   $sql = "SELECT * FROM requests WHERE request_status = ?";
+//   $query = $this->db->query($sql, array(1));
+//   return $query->num_rows();
+// }
 }

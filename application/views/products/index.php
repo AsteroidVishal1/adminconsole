@@ -89,11 +89,11 @@
 
         <form role="form" action="<?php echo base_url('products/remove') ?>" method="post" id="removeForm">
           <div class="modal-body">
-            <p>Do you really want to request?</p>
+            <p>Do you really want to remove?</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-primary">Submit Request</button>
           </div>
         </form>
 
@@ -113,23 +113,32 @@
           <h4 class="modal-title">Request Product</h4>
         </div>
 
-        <form role="form" action="<?php echo base_url('products/request') ?>" method="post" id="requestForm">
+        <form role="form" action="<?php echo base_url('requests/create') ?>" method="post" id="requestForm">
           <div class="modal-body">
             <table class="table table-bordered" id="product_info_table">
               <thead>
                 <tr>
                   <th style="width:50%">Product</th>
-                  <th style="width:10%">Qty</th>
+                  <th style="width:20%">Qty</th>
                   <th style="width:10%"><button type="button" id="add_row" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr id="row_1">
-                </tr>
+                <!-- <tr id="row_1"> -->
+                  <!-- <td>
+                    <select class="form-control select_group product" data-row-id="row_1" id="product_1" name="product[]" style="width:100%;" onchange="getProductData(1)" required>
+                      <option value=""></option>
+                      </?php foreach ($products as $k => $v) : ?>
+                        <option value="</?php echo $v['id'] ?>"></?php echo $v['name'] ?></option>
+                      </?php endforeach ?>
+                    </select>
+                  </td>
+                  <td><input type="text" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
+                  <td><button type="button" class="btn btn-default" onclick="removeRow('1')"><i class="fa fa-close"></i></button></td> -->
+                <!-- </tr> -->
               </tbody>
             </table>
-            <p>Do you really want to request?</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -150,7 +159,6 @@
   var base_url = "<?php echo base_url(); ?>";
 
   $(document).ready(function() {
-    var base_url = "<?php echo base_url(); ?>";
 
     $(".select_group").select2();
     // $("#description").wysihtml5();
@@ -174,12 +182,13 @@
         type: 'post',
         dataType: 'json',
         success: function(response) {
+          console.log(response);
 
           // console.log(reponse.x);
           var html = '<tr id="row_' + row_id + '">' +
             '<td>' +
-            '<select class="form-control select_group product" data-row-id="' + row_id + '" id="product_' + row_id + '" name="product[]" style="width:100%;" onchange="getProductData(' + row_id + ')">' +
-            '<option value=""></option>';
+            '<select class="form-control select_group product" data-row-id="' + row_id + '" id="product_' + row_id + '" name="product[]" style="width:100%;" onchange="getProductData(' + row_id + ')">';
+            //  + '<option value=""></option>';
           $.each(response, function(index, value) {
             html += '<option value="' + value.id + '">' + value.name + '</option>';
           });
@@ -264,9 +273,10 @@
   function requestFunc(id) {
 
     if (id) {
+      var form = $(this);
+
       $("#requestForm").on('submit', function() {
 
-        var form = $(this);
         $.ajax({
           url: form.attr('action'),
           type: form.attr('method'),
@@ -304,31 +314,10 @@
 
   // Modal Features
 
-  function getTotal(row = null) {
-    if (row) {
-      var total = Number($("#rate_value_" + row).val()) * Number($("#qty_" + row).val());
-      total = total.toFixed(2);
-      $("#amount_" + row).val(total);
-      $("#amount_value_" + row).val(total);
-
-      subAmount();
-
-    } else {
-      alert('no row !! please refresh the page');
-    }
-  }
-
   function getProductData(row_id) {
     var product_id = $("#product_" + row_id).val();
     if (product_id == "") {
-      $("#rate_" + row_id).val("");
-      $("#rate_value_" + row_id).val("");
-
       $("#qty_" + row_id).val("");
-
-      $("#amount_" + row_id).val("");
-      $("#amount_value_" + row_id).val("");
-
     } else {
       $.ajax({
         url: base_url + 'requests/getProductValueById',
@@ -338,20 +327,11 @@
         },
         dataType: 'json',
         success: function(response) {
-          // setting the rate value into the rate input field
-
-          $("#rate_" + row_id).val(response.price);
-          $("#rate_value_" + row_id).val(response.price);
-
           $("#qty_" + row_id).val(1);
           $("#qty_value_" + row_id).val(1);
 
           var total = Number(response.price) * 1;
           total = total.toFixed(2);
-          $("#amount_" + row_id).val(total);
-          $("#amount_value_" + row_id).val(total);
-
-          subAmount();
         } // /success
       }); // /ajax function to fetch the product data 
     }
@@ -359,6 +339,5 @@
 
   function removeRow(tr_id) {
     $("#product_info_table tbody tr#row_" + tr_id).remove();
-    subAmount();
   }
 </script>

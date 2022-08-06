@@ -64,7 +64,7 @@
           <!-- /.box -->
           <!-- <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Total Paid Orders - Report Data</h3>
+              <h3 class="box-title">Total Paid Requests - Report Data</h3>
             </div>
             <div class="box-body">
               <table id="datatables" class="table table-bordered table-striped">
