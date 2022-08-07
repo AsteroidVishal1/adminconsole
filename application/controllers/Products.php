@@ -16,6 +16,7 @@ class Products extends Admin_Controller
 		$this->load->model('model_brands');
 		$this->load->model('model_category');
 		$this->load->model('model_stores');
+		$this->load->model('model_requests');
 		$this->load->model('model_attributes');
 	}
 
@@ -73,12 +74,11 @@ class Products extends Admin_Controller
 
 			$result['data'][$key] = array(
 				$img,
-				// $value['sku'],
 				$value['name'],
 				$value['quality'],
 				$value['color'],
-				// $value['price'],
                 $value['qty'] . ' ' . $qty_status,
+                $this->model_requests->getRequestedQuantity($value['id']),
                 $store_data['name'],
 				$availability,
 				$buttons

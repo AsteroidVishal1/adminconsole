@@ -53,6 +53,7 @@
                   <th>Color</th>
                   <!-- <th>Price</th> -->
                   <th>Qty</th>
+                  <th>Requested Qty</th>
                   <th>Store</th>
                   <th>Availability</th>
                   <?php if (in_array('updateProduct', $user_permission) || in_array('deleteProduct', $user_permission) || in_array('viewProduct', $user_permission)) : ?>

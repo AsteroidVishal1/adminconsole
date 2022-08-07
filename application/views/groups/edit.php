@@ -192,8 +192,8 @@
                         <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="viewRequest" <?php if($serialize_permission) {
                           if(in_array('viewRequest', $serialize_permission)) { echo "checked"; } 
                         } ?>></td>
-                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="deleteRequest" <?php if($serialize_permission) {
-                          if(in_array('deleteRequest', $serialize_permission)) { echo "checked"; } 
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="updateRequestStatus" <?php if($serialize_permission) {
+                          if(in_array('updateRequestStatus', $serialize_permission)) { echo "checked"; } 
                         } ?>></td>
                       </tr>
                       <tr>

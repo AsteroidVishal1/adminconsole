@@ -54,8 +54,11 @@
                 <th>Quantity Requested</th>
                 <th>Date Time</th>
                 <th>Request Status</th>
-                <?php if(in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission) || in_array('deleteRequest', $user_permission)): ?>
+                <?php if(in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission)): ?>
                   <th>Action</th>
+                <?php endif; ?>
+                <?php if(in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission)): ?>
+                  <th>Update</th>
                 <?php endif; ?>
               </tr>
               </thead>

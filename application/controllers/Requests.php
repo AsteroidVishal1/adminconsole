@@ -69,13 +69,20 @@ class Requests extends Admin_Controller
 				$buttons .= '<a target="__blank" href="' . base_url('requests/printDiv/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-print"></i></a>';
 			}
 
-			if (in_array('updateRequest', $this->permission)) {
+			if (in_array('viewRequest', $this->permission) && $value['user_id'] == $this->session->id && $value['updated_by'] == "Pending") {
 				$buttons .= ' <a href="' . base_url('requests/update/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
+				$buttons .= ' <a href="' . base_url('requests/updateStatus/revoke/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-undo"></i></a>';
 			}
 
-			if (in_array('deleteRequest', $this->permission)) {
-				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc(' . $value['id'] . ')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
+			$updateButtons = '';
+
+			if (in_array('updateRequestStatus', $this->permission)) {
+				$updateButtons .= '<a target="__blank" href="' . base_url('requests/updateStatus/approve/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-check"></i></a>';
+				$updateButtons .= ' <a href="' . base_url('requests/updateStatus/reject/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-ban"></i></a>';
 			}
+
+			if ($value['updated_by'] != "Pending")
+				$updateButtons = $this->model_users->getUsername($value['updated_by']);
 
 			$result['data'][$key] = array(
 				$sr_no,
@@ -84,7 +91,8 @@ class Requests extends Admin_Controller
 				$product_qty,
 				$date_time,
 				$value['request_status'],
-				$buttons
+				$buttons,
+				$updateButtons
 			);
 		} // /foreach
 
@@ -114,13 +122,11 @@ class Requests extends Admin_Controller
 			if ($request_id) {
 				$this->session->set_flashdata('success', 'Successfully created');
 				redirect('requests/update/' . $request_id, 'refresh');
-			}
-			else {
+			} else {
 				$this->session->set_flashdata('errors', 'Error occurred!!');
 				redirect('requests/create/', 'refresh');
 			}
-		}
-		else {
+		} else {
 			// false case
 			$company = $this->model_company->getCompanyData(1);
 			$this->data['company_data'] = $company;
@@ -182,13 +188,11 @@ class Requests extends Admin_Controller
 			if ($update == true) {
 				$this->session->set_flashdata('success', 'Successfully updated');
 				redirect('requests/update/' . $id, 'refresh');
-			}
-			else {
+			} else {
 				$this->session->set_flashdata('errors', 'Error occurred!!');
 				redirect('requests/update/' . $id, 'refresh');
 			}
-		}
-		else {
+		} else {
 			// false case
 			$company = $this->model_company->getCompanyData(1);
 			$this->data['company_data'] = $company;
@@ -228,13 +232,11 @@ class Requests extends Admin_Controller
 			if ($delete == true) {
 				$response['success'] = true;
 				$response['messages'] = "Successfully removed";
-			}
-			else {
+			} else {
 				$response['success'] = false;
 				$response['messages'] = "Error in the database while removing the product information";
 			}
-		}
-		else {
+		} else {
 			$response['success'] = false;
 			$response['messages'] = "Refersh the page again!!";
 		}

@@ -21,6 +21,19 @@ class Model_products extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getProductQty($id = null)
+	{
+		if($id) {
+			$sql = "SELECT qty FROM products where id = ?";
+			$query = $this->db->query($sql, array($id));
+			return $query->row_array();
+		}
+
+		$sql = "SELECT qty FROM products ORDER BY id DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
 	public function getMultipleProductData($ids = null)
 	{
 		if(!$ids) {

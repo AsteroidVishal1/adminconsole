@@ -33,6 +33,22 @@ class Model_requests extends CI_Model
     return $query->result_array();
   }
 
+  public function getRequestedQuantity($product_id = null)
+  {
+    if (!$product_id) {
+      return false;
+    }
+    
+    $sql = "SELECT qty FROM requests_item WHERE product_id = ?";
+    $query = $this->db->query($sql, array($product_id));
+    $query = $query->result_array();
+    $total = 0;
+    foreach ($query as $key) {
+      $total += $key['qty'];
+    }
+    return $total;
+  }
+  
   // get the requests item data
   public function getProductId($request_id = null)
   {
@@ -47,11 +63,18 @@ class Model_requests extends CI_Model
 
   public function create()
   {
+    $count_product = count($this->input->post('product'));
+    for ($x = 0; $x < $count_product; $x++) {
+      $product_id = $this->input->post('product')[$x];
+      $available_qty = $this->model_products->getProductQty($product_id)  - $this->getRequestedQuantity($product_id);
+        if($available_qty < $this->input->post('qty')[$x])
+          return null;
+    }
     $user_id = $this->session->userdata('id');
     $data = array(
       'user_id' => $user_id,
       'date_time' => strtotime(date('Y-m-d h:i:s a')),
-      'request_status' => 'pending'
+      'request_status' => 0
     );
 
     $this->db->insert('requests', $data);
@@ -59,7 +82,6 @@ class Model_requests extends CI_Model
 
     $this->load->model('model_products');
 
-    $count_product = count($this->input->post('product'));
     for ($x = 0; $x < $count_product; $x++) {
       $items = array(
         'request_id' => $request_id,
@@ -69,14 +91,14 @@ class Model_requests extends CI_Model
 
       $this->db->insert('requests_item', $items);
 
-    // now decrease the stock from the product
-    // $product_data = $this->model_products->getProductData($this->input->post('product')[$x]);
-    // $qty = (int) $product_data['qty'] - (int) $this->input->post('qty')[$x];
+      // now decrease the stock from the product
+      // $product_data = $this->model_products->getProductData($this->input->post('product')[$x]);
+      // $qty = (int) $product_data['qty'] - (int) $this->input->post('qty')[$x];
 
-    // $update_product = array('qty' => $qty);
+      // $update_product = array('qty' => $qty);
 
 
-    // $this->model_products->update($update_product, $this->input->post('product')[$x]);
+      // $this->model_products->update($update_product, $this->input->post('product')[$x]);
     }
 
     return ($request_id) ? $request_id : false;
@@ -150,20 +172,49 @@ class Model_requests extends CI_Model
       return true;
     }
   }
-  public function remove($id)  {
-    if ($id) {
+  // public function remove($id)
+  // {
+  //   if ($id) {
+  //     $this->db->where('id', $id);
+  //     $delete = $this->db->delete('requests');
+
+  //     $this->db->where('request_id', $id);
+  //     $delete_item = $this->db->delete('requests_item');
+  //     return ($delete == true && $delete_item) ? true : false;
+  //   }
+  // }
+
+  public function updateStatus($id) {
+    if($id) {
       $this->db->where('id', $id);
-      $delete = $this->db->delete('requests');
+      switch ($this->input->post('request_status')) {
+        case 'approve':
+          $data = array(
+            'request_status' => 1,
+            'updated_by' => $this->session->id
+          );
+          // quantity kam krni hai products me
+          break;
+        case 'reject':
+          $data = array(
+            'request_status' => 2,
+            'updated_by' => $this->session->id
+          );
+          break;
+        case 'revoke':
+          $data = array(
+            'request_status' => 3,
+            'updated_by' => $this->session->id
+          );
+      }
+      $update = $this->db->update('requests', $data);
+    }
+  }
 
-      $this->db->where('request_id', $id);
-      $delete_item = $this->db->delete('requests_item');
-      return ($delete == true && $delete_item) ? true : false;
-    }  }
-
-// public function countTotalPaidRequests()
-// {
-//   $sql = "SELECT * FROM requests WHERE request_status = ?";
-//   $query = $this->db->query($sql, array(1));
-//   return $query->num_rows();
-// }
+  // public function countTotalPaidRequests()
+  // {
+  //   $sql = "SELECT * FROM requests WHERE request_status = ?";
+  //   $query = $this->db->query($sql, array(1));
+  //   return $query->num_rows();
+  // }
 }

@@ -113,7 +113,7 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="createRequest" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="updateRequest" class="minimal"></td>
                         <td><input type="checkbox" name="permission[]" id="permission" value="viewRequest" class="minimal"></td>
-                        <td><input type="checkbox" name="permission[]" id="permission" value="deleteRequest" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updateRequestStatus" class="minimal"></td>
                       </tr>
                       <tr>
                         <td>Reports</td>

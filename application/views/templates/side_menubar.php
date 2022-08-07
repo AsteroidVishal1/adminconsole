@@ -107,7 +107,7 @@
           <?php endif; ?>
 
 
-          <?php if(in_array('createRequest', $user_permission) || in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission) || in_array('deleteRequest', $user_permission)): ?>
+          <?php if(in_array('createRequest', $user_permission) || in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission)): ?>
             <li class="treeview" id="mainRequestsNav">
               <a href="#">
                 <i class="fa fa-dollar"></i>
@@ -120,7 +120,7 @@
                 <?php if(in_array('createRequest', $user_permission)): ?>
                   <li id="addRequestNav"><a href="<?php echo base_url('requests/create') ?>"><i class="fa fa-circle-o"></i> Add Request</a></li>
                 <?php endif; ?>
-                <?php if(in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission) || in_array('deleteRequest', $user_permission)): ?>
+                <?php if(in_array('updateRequest', $user_permission) || in_array('viewRequest', $user_permission)): ?>
                 <li id="manageRequestsNav"><a href="<?php echo base_url('requests') ?>"><i class="fa fa-circle-o"></i> Manage Requests</a></li>
                 <?php endif; ?>
               </ul>
