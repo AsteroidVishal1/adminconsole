@@ -66,9 +66,14 @@
                         </td>
                         <td><input type="number" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
                         <td><button type="button" class="btn btn-default" onclick="removeRow('1')"><i class="fa fa-close"></i></button></td>
+                        <tr><label for="description">Remarks</label>
+                          <input type="text" class="form-control" id="description" name="description" placeholder="Enter Remarks" autocomplete="off" /></tr>
                      </tr>
                    </tbody>
                 </table>
+                <div>
+                  
+                </div>
 
                 <br /> <br/>
 
@@ -79,7 +84,7 @@
                 <button type="submit" class="btn btn-primary">Create Request</button>
                 <a href="<?php echo base_url('requests/') ?>" class="btn btn-warning">Back</a>
               </div>
-            </form>
+          </form>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
