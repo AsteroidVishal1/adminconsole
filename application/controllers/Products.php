@@ -56,7 +56,8 @@ class Products extends Admin_Controller
             }
             
             if(in_array('viewProduct', $this->permission)) { 
-    			$buttons .= ' <button type="button" class="btn btn-default" onclick="requestFunc('.$value['id'].')" data-toggle="modal" data-target="#requestModal"><i class="fa fa-rocket"></i></button>';
+    			// $buttons .= ' <button type="button" class="btn btn-default" onclick="requestFunc('.$value['id'].')" data-toggle="modal" data-target="#requestModal"><i class="fa fa-rocket"></i></button>';
+                $buttons .= '<a href="'.base_url('requests/create/'.$value['id']).'" class="btn btn-default"><i class="fa fa-rocket"></i></a>';
             }
 			
 
