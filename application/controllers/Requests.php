@@ -45,6 +45,7 @@ class Requests extends Admin_Controller
 			// $username = $value['user_id'];
 			$username = $this->model_users->getUsername($value['user_id']);
 			$product_id = $this->model_requests->getProductId($value['id']);
+			$remarks = $value['remarks'];
 			$ids = array();
 			$product_qty = array();
 			foreach ($product_id as $product) {
@@ -77,7 +78,8 @@ class Requests extends Admin_Controller
 			$updateButtons = '';
 
 			if (in_array('updateRequestStatus', $this->permission)) {
-				$updateButtons .= '<a target="__blank" href="' . base_url('requests/updateStatus/approve/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-check"></i></a>';
+				// $this->model_requests->updateStatus($value['id']);
+				$updateButtons .= ' <a href="' . base_url('requests/updateStatus/approve/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-check"></i></a>';
 				$updateButtons .= ' <a href="' . base_url('requests/updateStatus/reject/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-ban"></i></a>';
 			}
 
@@ -89,6 +91,7 @@ class Requests extends Admin_Controller
 				$username,
 				$product_names,
 				$product_qty,
+				$remarks,
 				$date_time,
 				$value['request_status'],
 				$buttons,

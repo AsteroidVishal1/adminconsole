@@ -269,8 +269,7 @@
     }
   }
 
-
-  // remove functions 
+  // request functions 
   function requestFunc(id) {
 
     if (id) {

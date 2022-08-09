@@ -38,7 +38,7 @@ class Model_requests extends CI_Model
     if (!$product_id) {
       return false;
     }
-    
+
     $sql = "SELECT qty FROM requests_item WHERE product_id = ?";
     $query = $this->db->query($sql, array($product_id));
     $query = $query->result_array();
@@ -48,7 +48,7 @@ class Model_requests extends CI_Model
     }
     return $total;
   }
-  
+
   // get the requests item data
   public function getProductId($request_id = null)
   {
@@ -64,17 +64,19 @@ class Model_requests extends CI_Model
   public function create()
   {
     $count_product = count($this->input->post('product'));
-    for ($x = 0; $x < $count_product; $x++) {
-      $product_id = $this->input->post('product')[$x];
-      $available_qty = $this->model_products->getProductQty($product_id)  - $this->getRequestedQuantity($product_id);
-        if($available_qty < $this->input->post('qty')[$x])
-          return null;
-    }
+    $remarks = $this->input->post('remarks');
+    // for ($x = 0; $x < $count_product; $x++) {
+    //   $product_id = $this->input->post('product')[$x];
+    //   $available_qty = (int)$this->model_products->getProductQty($product_id) - (int)$this->getRequestedQuantity($product_id);
+    //   if ($available_qty < $this->input->post('qty')[$x])
+    //     return null;
+    // }
     $user_id = $this->session->userdata('id');
     $data = array(
       'user_id' => $user_id,
       'date_time' => strtotime(date('Y-m-d h:i:s a')),
-      'request_status' => 0
+      'request_status' => 0,
+      'remarks' => $remarks == null ? "" : $remarks
     );
 
     $this->db->insert('requests', $data);
@@ -113,65 +115,66 @@ class Model_requests extends CI_Model
     }
   }
 
-  public function update($id)
-  {
-    if ($id) {
-      $user_id = $this->session->userdata('id');
-      // fetch the request data 
+  // public function update($id)
+  // {
+  //   if ($id) {
+  //     $user_id = $this->session->userdata('id');
+  //     // fetch the request data 
 
-      $data = array(
-        'user_id' => $user_id,
-        'request_status' => $this->input->post('request_status')
-      );
+  //     $data = array(
+  //       'user_id' => $user_id,
+  //       'request_status' => $this->input->post('request_status')
+  //     );
 
-      $this->db->where('id', $id);
-      $update = $this->db->update('requests', $data);
+  //     $this->db->where('id', $id);
+  //     $update = $this->db->update('requests', $data);
 
-      // now the request item 
-      // first we will replace the product qty to original and subtract the qty again
-      if ($this->input->post('request_status') == 'approved') {
-        $this->load->model('model_products');
-        $get_request_item = $this->getRequestsItemData($id);
-        foreach ($get_request_item as $k => $v) {
-          $product_id = $v['product_id'];
-          $qty = $v['qty'];
-          // get the product 
-          $product_data = $this->model_products->getProductData($product_id);
-          $update_qty = $product_data['qty'] - $qty;
-          $update_product_data = array('qty' => $update_qty);
+  //     // now the request item 
+  //     // first we will replace the product qty to original and subtract the qty again
+  //     if ($this->input->post('request_status') == 'approved') {
+  //       $this->load->model('model_products');
+  //       $get_request_item = $this->getRequestsItemData($id);
+  //       foreach ($get_request_item as $k => $v) {
+  //         $product_id = $v['product_id'];
+  //         $qty = $v['qty'];
+  //         // get the product 
+  //         $product_data = $this->model_products->getProductData($product_id);
+  //         $update_qty = $product_data['qty'] - $qty;
+  //         $update_product_data = array('qty' => $update_qty);
 
-          // update the product qty
-          $this->model_products->update($update_product_data, $product_id);
-        }
-      }
+  //         // update the product qty
+  //         $this->model_products->update($update_product_data, $product_id);
+  //       }
+  //     }
 
-      // now remove the request item data 
-      // $this->db->where('request_id', $id);
-      // $this->db->delete('requests_item');
+  //     // now remove the request item data 
+  //     // $this->db->where('request_id', $id);
+  //     // $this->db->delete('requests_item');
 
-      // now decrease the product qty
-      // $count_product = count($this->input->post('product'));
-      // for ($x = 0; $x < $count_product; $x++) {
-      //   $items = array(
-      //     'request_id' => $id,
-      //     'product_id' => $this->input->post('product')[$x],
-      //     'qty' => $this->input->post('qty')[$x],
-      //     'rate' => $this->input->post('rate_value')[$x],
-      //     'amount' => $this->input->post('amount_value')[$x],
-      //   );
-      //   $this->db->insert('requests_item', $items);
+  //     // now decrease the product qty
+  //     // $count_product = count($this->input->post('product'));
+  //     // for ($x = 0; $x < $count_product; $x++) {
+  //     //   $items = array(
+  //     //     'request_id' => $id,
+  //     //     'product_id' => $this->input->post('product')[$x],
+  //     //     'qty' => $this->input->post('qty')[$x],
+  //     //     'rate' => $this->input->post('rate_value')[$x],
+  //     //     'amount' => $this->input->post('amount_value')[$x],
+  //     //   );
+  //     //   $this->db->insert('requests_item', $items);
 
-      //   // now decrease the stock from the product
-      //   $product_data = $this->model_products->getProductData($this->input->post('product')[$x]);
-      //   $qty = (int) $product_data['qty'] - (int) $this->input->post('qty')[$x];
+  //     //   // now decrease the stock from the product
+  //     //   $product_data = $this->model_products->getProductData($this->input->post('product')[$x]);
+  //     //   $qty = (int) $product_data['qty'] - (int) $this->input->post('qty')[$x];
 
-      //   $update_product = array('qty' => $qty);
-      //   $this->model_products->update($update_product, $this->input->post('product')[$x]);
-      // }
+  //     //   $update_product = array('qty' => $qty);
+  //     //   $this->model_products->update($update_product, $this->input->post('product')[$x]);
+  //     // }
 
-      return true;
-    }
-  }
+  //     return true;
+  //   }
+  // }
+
   // public function remove($id)
   // {
   //   if ($id) {
@@ -184,30 +187,36 @@ class Model_requests extends CI_Model
   //   }
   // }
 
-  public function updateStatus($id) {
-    if($id) {
-      $this->db->where('id', $id);
+  public function updateStatus($id)
+  {
+    if ($id) {
+      $data = array('updated_by' => $this->session->id);
       switch ($this->input->post('request_status')) {
         case 'approve':
-          $data = array(
-            'request_status' => 1,
-            'updated_by' => $this->session->id
-          );
-          // quantity kam krni hai products me
+          $data['request_status'] = 1;
+          $this->load->model('model_products');
+          $get_request_item = $this->getRequestsItemData($id);
+          foreach ($get_request_item as $k => $v) {
+            $product_id = $v['product_id'];
+            $qty = $v['qty'];
+            
+            // get the product 
+            $product_data = $this->model_products->getProductData($product_id);
+            $update_qty = $product_data['qty'] - $qty;
+            $update_product_data = array('qty' => $update_qty);
+
+            // update the product qty
+            $this->model_products->update($update_product_data, $product_id);
+          }
           break;
         case 'reject':
-          $data = array(
-            'request_status' => 2,
-            'updated_by' => $this->session->id
-          );
+          $data['request_status'] = 2;
           break;
         case 'revoke':
-          $data = array(
-            'request_status' => 3,
-            'updated_by' => $this->session->id
-          );
+          $data['request_status'] = 3;
       }
-      $update = $this->db->update('requests', $data);
+      $sql = 'UPDATE requests SET request_status = ?, updated_by = ? WHERE id = ?';
+      $query = $this->db->query($sql, array($data['request_status'], $data['updated_by'], $id));
     }
   }
 

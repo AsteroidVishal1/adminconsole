@@ -77,17 +77,6 @@ class Model_products extends CI_Model
 		}
 	}
 
-	// public function request($data, $id)
-	// {
-	// 	$user_id = $this->session->userdata('id');
-
-	// 	if($id) {
-	// 		$this->db->where('id', $id);
-	// 		$delete = $this->db->delete('products');
-	// 		return ($delete == true) ? true : false;
-	// 	}
-	// }
-
 	public function countTotalProducts()
 	{
 		$sql = "SELECT * FROM products";

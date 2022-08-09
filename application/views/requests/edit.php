@@ -1,5 +1,3 @@
-
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -22,12 +20,12 @@
 
         <div id="messages"></div>
 
-        <?php if($this->session->flashdata('success')): ?>
+        <?php if ($this->session->flashdata('success')) : ?>
           <div class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <?php echo $this->session->flashdata('success'); ?>
           </div>
-        <?php elseif($this->session->flashdata('error')): ?>
+        <?php elseif ($this->session->flashdata('error')) : ?>
           <div class="alert alert-error alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <?php echo $this->session->flashdata('error'); ?>
@@ -40,19 +38,19 @@
             <h3 class="box-title">Edit Request</h3>
           </div>
           <!-- /.box-header -->
-          <form role="form" action="<?php base_url('requests/create') ?>" method="post" class="form-horizontal">
-              <div class="box-body">
+          <form role="form" action="<?php base_url('requests/update') ?>" method="post" class="form-horizontal">
+            <div class="box-body">
 
-                <?php echo validation_errors(); ?>
+              <?php echo validation_errors(); ?>
 
-                <div class="form-group">
-                  <label for="date" class="col-sm-12 control-label">Date: <?php echo date('Y-m-d') ?></label>
-                </div>
-                <div class="form-group">
-                  <label for="time" class="col-sm-12 control-label">Date: <?php echo date('h:i a') ?></label>
-                </div>
+              <div class="form-group">
+                <label for="date" class="col-sm-12 control-label">Date: <?php echo date('Y-m-d') ?></label>
+              </div>
+              <div class="form-group">
+                <label for="time" class="col-sm-12 control-label">Date: <?php echo date('h:i a') ?></label>
+              </div>
 
-                <div class="col-md-4 col-xs-12 pull pull-left">
+              <div class="col-md-4 col-xs-12 pull pull-left">
 
                 <table class="table table-bordered" id="product_info_table">
                   <thead>
@@ -63,40 +61,48 @@
                     </tr>
                   </thead>
 
-                   <tbody>
+                  <tbody>
 
-                    <?php if(isset($request_data['request_item'])): ?>
+                    <?php if (isset($request_data['request_item'])) : ?>
                       <?php $x = 1; ?>
-                      <?php foreach ($request_data['request_item'] as $key => $val): ?>
-                        <?php //print_r($v); ?>
-                       <tr id="row_<?php echo $x; ?>">
-                         <td>
-                          <select class="form-control select_group product" data-row-id="row_<?php echo $x; ?>" id="product_<?php echo $x; ?>" name="product[]" style="width:100%;" onchange="getProductData(<?php echo $x; ?>)" required>
+                      <?php foreach ($request_data['request_item'] as $key => $val) : ?>
+                        <?php //print_r($v); 
+                        ?>
+                        <tr id="row_<?php echo $x; ?>">
+                          <td>
+                            <select class="form-control select_group product" data-row-id="row_<?php echo $x; ?>" id="product_<?php echo $x; ?>" name="product[]" style="width:100%;" onchange="getProductData(<?php echo $x; ?>)" required>
                               <option value=""></option>
-                              <?php foreach ($products as $k => $v): ?>
-                                <option value="<?php echo $v['id'] ?>" <?php if($val['product_id'] == $v['id']) { echo "selected='selected'"; } ?>><?php echo $v['name'] ?></option>
+                              <?php foreach ($products as $k => $v) : ?>
+                                <option value="
+                                <?php
+                                echo $v['id']
+                                ?>" <?php
+                                    if ($val['product_id'] == $v['id']) {
+                                      echo "selected='selected'";
+                                    } ?>>
+                                  <?php echo $v['name'] ?></option>
                               <?php endforeach ?>
                             </select>
                           </td>
                           <td><input type="number" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
                           <td><button type="button" class="btn btn-default" onclick="removeRow('<?php echo $x; ?>')"><i class="fa fa-close"></i></button></td>
-                       </tr>
-                       <?php $x++; ?>
-                     <?php endforeach; ?>
-                   <?php endif; ?>
-                   </tbody>
+                        </tr>
+                        <?php $x++; ?>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
+                  </tbody>
                 </table>
 
-                <br /> <br/>
+                <br /> <br />
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <a target="__blank" href="<?php echo base_url() . 'requests/printDiv/'.$request_data['request']['id'] ?>" class="btn btn-default" >Print</a>
+                <a target="__blank" href="<?php echo base_url() . 'requests/printDiv/' . $request_data['request']['id'] ?>" class="btn btn-default">Print</a>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
                 <a href="<?php echo base_url('requests/') ?>" class="btn btn-warning">Back</a>
               </div>
-            </form>
+          </form>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
@@ -104,7 +110,7 @@
       <!-- col-md-12 -->
     </div>
     <!-- /.row -->
-    
+
 
   </section>
   <!-- /.content -->
@@ -123,7 +129,8 @@
   //       success:function(response) {
   //         var mywindow = window.open('', 'new div', 'height=400,width=600');
   //         // mywindow.document.write('<html><head><title></title>');
-  //         // mywindow.document.write('<link rel="stylesheet" href="<?php //echo base_url('assets/bower_components/bootstrap/dist/css/bootstrap.min.css') ?>" type="text/css" />');
+  //         // mywindow.document.write('<link rel="stylesheet" href="<?php //echo base_url('assets/bower_components/bootstrap/dist/css/bootstrap.min.css') 
+                                                                      ?>" type="text/css" />');
   //         // mywindow.document.write('</head><body >');
   //         mywindow.document.write(response);
   //         // mywindow.document.write('</body></html>');
@@ -143,8 +150,7 @@
 
     $("#mainRequestsNav").addClass('active');
     $("#manageRequestsNav").addClass('active');
-    
-    
+
     // Add new row in the table 
     $("#add_row").unbind('click').bind('click', function() {
       var table = $("#product_info_table");
@@ -152,38 +158,36 @@
       var row_id = count_table_tbody_tr + 1;
 
       $.ajax({
-          url: base_url + '/requests/getTableProductRow/',
-          type: 'post',
-          dataType: 'json',
-          success:function(response) {
-            
+        url: base_url + '/requests/getTableProductRow/',
+        type: 'post',
+        dataType: 'json',
+        success: function(response) {
 
-              // console.log(reponse.x);
-               var html = '<tr id="row_'+row_id+'">'+
-                   '<td>'+ 
-                    '<select class="form-control select_group product" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
-                        '<option value=""></option>';
-                        $.each(response, function(index, value) {
-                          html += '<option value="'+value.id+'">'+value.name+'</option>';             
-                        });
-                        
-                      html += '</select>'+
-                    '</td>'+ 
-                    '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
-                    '<td><button type="button" class="btn btn-default" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-close"></i></button></td>'+
-                    '</tr>';
+          // console.log(reponse.x);
+          var html = '<tr id="row_' + row_id + '">' +
+            '<td>' +
+            '<select class="form-control select_group product" data-row-id="' + row_id + '" id="product_' + row_id + '" name="product[]" style="width:100%;" onchange="getProductData(' + row_id + ')">' +
+            '<option value=""></option>';
+          $.each(response, function(index, value) {
+            html += '<option value="' + value.id + '">' + value.name + '</option>';
+          });
 
-                if(count_table_tbody_tr >= 1) {
-                $("#product_info_table tbody tr:last").after(html);  
-              }
-              else {
-                $("#product_info_table tbody").html(html);
-              }
+          html += '</select>' +
+            '</td>' +
+            '<td><input type="number" name="qty[]" id="qty_' + row_id + '" class="form-control" onkeyup="getTotal(' + row_id + ')"></td>' +
+            '<td><button type="button" class="btn btn-default" onclick="removeRow(\'' + row_id + '\')"><i class="fa fa-close"></i></button></td>' +
+            '</tr>';
 
-              $(".product").select2();
-
+          if (count_table_tbody_tr >= 1) {
+            $("#product_info_table tbody tr:last").after(html);
+          } else {
+            $("#product_info_table tbody").html(html);
           }
-        });
+
+          $(".product").select2();
+
+        }
+      });
 
       return false;
     });
@@ -191,27 +195,27 @@
   }); // /document
 
   // get the product information from the server
-  function getProductData(row_id)
-  {
-    var product_id = $("#product_"+row_id).val();    
-    if(product_id == "") {
-      $("#qty_"+row_id).val("");           
+  function getProductData(row_id) {
+    var product_id = $("#product_" + row_id).val();
+    if (product_id == "") {
+      $("#qty_" + row_id).val("");
     } else {
       $.ajax({
         url: base_url + 'requests/getProductValueById',
         type: 'post',
-        data: {product_id : product_id},
+        data: {
+          product_id: product_id
+        },
         dataType: 'json',
-        success:function(response) {
-          $("#qty_"+row_id).val(1);
-          $("#qty_value_"+row_id).val(1);
+        success: function(response) {
+          $("#qty_" + row_id).val(1);
+          $("#qty_value_" + row_id).val(1);
         } // /success
       }); // /ajax function to fetch the product data 
     }
   }
 
-  function removeRow(tr_id)
-  {
-    $("#product_info_table tbody tr#row_"+tr_id).remove();
+  function removeRow(tr_id) {
+    $("#product_info_table tbody tr#row_" + tr_id).remove();
   }
 </script>
