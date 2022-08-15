@@ -31,6 +31,7 @@ class Requests extends Admin_Controller
 		$this->render_template('requests/index', $this->data);
 	}
 
+
 	/*
 	 * Fetches the requests data from the requests table 
 	 * this function is called from the datatable ajax function
@@ -72,19 +73,31 @@ class Requests extends Admin_Controller
 
 			if (in_array('viewRequest', $this->permission) && $value['user_id'] == $this->session->id && $value['updated_by'] == "Pending") {
 				$buttons .= ' <a href="' . base_url('requests/update/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
-				$buttons .= ' <a href="' . base_url('requests/updateStatus/revoke/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-undo"></i></a>';
+				// $buttons .= ' <a href="' . base_url('requests/updateStatus/revoke/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-undo"></i></a>';
+				$buttons .= ' <button class="btn btn-default" onclick="revokeIt(' . $value["id"] . ')"><i class="fa fa-undo"></i></button>';
 			}
 
 			$updateButtons = '';
 
 			if (in_array('updateRequestStatus', $this->permission)) {
 				// $this->model_requests->updateStatus($value['id']);
-				$updateButtons .= ' <a href="' . base_url('requests/updateStatus/approve/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-check"></i></a>';
-				$updateButtons .= ' <a href="' . base_url('requests/updateStatus/reject/' . $value['id']) . '" class="btn btn-default"><i class="fa fa-ban"></i></a>';
+				$updateButtons .= ' <button class="btn btn-default" onclick="approveIt(' . $value["id"] . ')"><i class="fa fa-check"></i></button>';
+				$updateButtons .= ' <button class="btn btn-default" onclick="rejectIt(' . $value["id"] . ')"><i class="fa fa-ban"></i></button>';
 			}
 
 			if ($value['updated_by'] != "Pending")
 				$updateButtons = $this->model_users->getUsername($value['updated_by']);
+			
+			$status = '';
+			if($value['request_status'] == 0) {
+				$status = "Pending";
+			} elseif ($value['request_status'] == 1) {
+				$status = "Approved";
+			} elseif ($value['request_status'] == 2) {
+				$status = "Rejected";
+			} elseif ($value['request_status'] == 3) {
+				$status = "Revoked";
+			}
 
 			$result['data'][$key] = array(
 				$sr_no,
@@ -93,13 +106,21 @@ class Requests extends Admin_Controller
 				$product_qty,
 				$remarks,
 				$date_time,
-				$value['request_status'],
+				$status,
 				$buttons,
 				$updateButtons
 			);
 		} // /foreach
 
 		echo json_encode($result);
+	}
+
+	public function updateData() {
+	
+		if ($this->input->post('id') && $this->input->post('request_status')) {
+			echo $this->model_requests->updateStatus($_POST['id']);
+			// echo "Working";
+		}
 	}
 
 	/*

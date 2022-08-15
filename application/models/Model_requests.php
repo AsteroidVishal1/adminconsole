@@ -64,7 +64,7 @@ class Model_requests extends CI_Model
   public function create()
   {
     $count_product = count($this->input->post('product'));
-    $remarks = $this->input->post('remarks');
+    $remarks = $this->input->post('description');
     // for ($x = 0; $x < $count_product; $x++) {
     //   $product_id = $this->input->post('product')[$x];
     //   $available_qty = (int)$this->model_products->getProductQty($product_id) - (int)$this->getRequestedQuantity($product_id);

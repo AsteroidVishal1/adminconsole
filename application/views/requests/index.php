@@ -116,10 +116,49 @@
     // initialize the datatable 
     manageTable = $('#manageTable').DataTable({
       'ajax': base_url + 'requests/fetchRequestsData',
-      'order': []
+      'order': [],
     });
 
   });
+
+  function approveIt(id){
+    console.log(id);
+    $.ajax({
+        url: base_url + 'requests/updateData',
+        type: 'post',
+        data: { "request_status": "approve", "id": id},
+        success: function(response) { 
+          table = $('#manageTable').DataTable();
+          table.ajax.reload(null, false);
+        }
+    });
+  }
+  
+  function rejectIt(id){
+    console.log(id);
+    $.ajax({
+        url: base_url + 'requests/updateData',
+        type: 'post',
+        data: { "request_status": "reject", "id": id},
+        success: function(response) { 
+          table = $('#manageTable').DataTable();
+          table.ajax.reload(null, false);
+        }
+    });
+  }
+
+  function revokeIt(id){
+    console.log(id);
+    $.ajax({
+        url: base_url + 'requests/updateData',
+        type: 'post',
+        data: { "request_status": "revoke", "id": id},
+        success: function(response) { 
+          table = $('#manageTable').DataTable();
+          table.ajax.reload(null, false);
+        }
+    });
+  }
 
   // remove functions 
   function removeFunc(id) {
@@ -165,4 +204,9 @@
       });
     }
   }
+  
+  // function clicked() {
+  //   console.log("Click karta hai");
+  //       // header("Content-Type: text/xml");
+  // }
 </script>
